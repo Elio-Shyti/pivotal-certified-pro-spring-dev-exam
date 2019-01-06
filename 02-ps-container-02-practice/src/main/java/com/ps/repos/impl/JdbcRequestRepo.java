@@ -6,11 +6,11 @@ import com.ps.ents.User;
 import com.ps.repos.RequestRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Description;
 import org.springframework.stereotype.Repository;
 
+import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.util.Set;
 
@@ -32,7 +32,7 @@ public class JdbcRequestRepo extends JdbcAbstractRepo<Request> implements Reques
     public JdbcRequestRepo() {
     }
 
-    @Autowired
+    @Inject
     public JdbcRequestRepo(@Qualifier("dataSource") DataSource dataSource) {
         super(dataSource);
     }
