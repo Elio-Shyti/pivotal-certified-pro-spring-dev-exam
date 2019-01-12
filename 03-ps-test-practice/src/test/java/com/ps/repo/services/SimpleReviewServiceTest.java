@@ -8,6 +8,7 @@ import com.ps.repos.ReviewRepo;
 import com.ps.services.impl.SimpleReviewService;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -57,6 +58,7 @@ public class SimpleReviewServiceTest {
         reviewSet.add(review);
 
         //TODO 17. Define the mock behavoiur using Mockito methods
+        Mockito.when(reviewMockRepo.findAllForUser(user)).thenReturn(reviewSet);
         Set<Review> result = simpleReviewService.findAllByUser(user);
         verify(reviewMockRepo, times(1)).findAllForUser(user);
         assertEquals(result.size(), 1);
