@@ -33,7 +33,7 @@ public class TestUserService {
     }
 
     // test Before advice
-    @Test(expected = IllegalArgumentException.class)
+    @Test()
     public void testBeforeUpdatePass() {
         userService.updatePassword(1L, "new%pass");
         User user = userService.findById(1L);
