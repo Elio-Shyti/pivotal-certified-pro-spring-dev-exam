@@ -2,9 +2,8 @@ package com.ps.repo;
 
 import com.ps.config.AppConfig;
 import com.ps.config.TestDataConfig;
-import com.ps.repos.UserRepo;
 import com.ps.ents.User;
-import com.ps.util.Pair;
+import com.ps.repos.UserRepo;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,9 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by iuliana.cosmina on 6/4/16.
@@ -45,16 +42,16 @@ public class TestJdbcTemplateUserRepo {
         assertEquals("John", user.getUsername());
     }
 
-    @Test
+    @Test(expected = EmptyResultDataAccessException.class)
     public void testNoFindById() {
         // TODO 27: Use the JdbcTemplate instance to query for a user that does not exist and make this test pass
-        User user = null;
+        User user = userRepo.findById(5L);
         assertEquals("Darius", user.getUsername());
     }
 
     @Test
     public void testCount(){
-        int result = 0;
+        int result = userRepo.countUsers();;
         // TODO 28: Use the JdbcTemplate instance to query for the number of rows in the P_USER table
         assertEquals(4, result);
     }

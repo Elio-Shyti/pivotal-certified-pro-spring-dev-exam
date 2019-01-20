@@ -9,13 +9,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -44,10 +41,20 @@ public class TestNamedJdbcTemplateUserRepo {
         assertEquals("John", user.getUsername());
     }
 
-    @Test
+    @Test(expected = EmptyResultDataAccessException.class)
     public void testNoFindById() {
         User user = userRepo.findById(99L);
         assertEquals("John", user.getUsername());
+    }
+
+    @Test
+    public void testUpdatePassword() {
+        userRepo.createUser(6L, "myUser", "password", "email");
+        User user = userRepo.findById(6L);
+        assertNotNull(user);
+        userRepo.updatePassword(user.getId(), "newPassword");
+        user = userRepo.findById(6L);
+        assertEquals(user.password, "newPassword");
     }
     
 }
