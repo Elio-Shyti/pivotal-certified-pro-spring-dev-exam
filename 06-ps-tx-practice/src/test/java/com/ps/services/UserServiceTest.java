@@ -3,6 +3,7 @@ package com.ps.services;
 import com.ps.config.AppConfig;
 import com.ps.config.TestDataConfig;
 import com.ps.ents.User;
+import com.ps.exceptions.MailSendingException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -66,10 +67,10 @@ public class UserServiceTest {
         assertEquals(8, count);
     }
 
-    @Test
-    public void updatePassword() {
+    @Test(expected = MailSendingException.class)
+    public void updatePassword() throws MailSendingException {
         //TODO 35. Complete definition of this test in order for it to pass
-        int res = 0; //userService.updatePassword(2L, "test_pass");
+        int res = userService.updatePassword(2L, "test_pass");
         assertEquals(1, res);
     }
 }
