@@ -16,7 +16,6 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -80,7 +79,11 @@ public class TestDataConfig {
 
     @Bean
     public SessionFactory sessionFactory() {
-        return null; // TODO 39. Add appropriate declaration of SessionFactory bean
+        // TODO 39. Add appropriate declaration of SessionFactory bean
+        return new LocalSessionFactoryBuilder(dataSource())
+                .scanPackages("com.ps.ents")
+                .addProperties(hibernateProperties())
+                .buildSessionFactory();
     }
 
     @Bean
